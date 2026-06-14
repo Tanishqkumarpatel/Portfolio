@@ -1152,6 +1152,11 @@ textarea.form-control {
   display: block;
 }
 
+.form-status.error {
+  color: #ef4444;
+  display: block;
+}
+
 /* --- Footer --- */
 footer {
   border-top: 1px solid var(--card-border);

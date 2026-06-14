@@ -517,17 +517,41 @@ Connect with Tanishq:
       formStatus.className = "form-status loading";
       formStatus.textContent = "Sending message...";
       
-      // Simulate form submission delay
-      setTimeout(() => {
-        formStatus.className = "form-status success";
-        formStatus.textContent = "Message sent successfully! Thanks for reaching out.";
-        contactForm.reset();
-        
+      const formData = new FormData(contactForm);
+      const object = Object.fromEntries(formData);
+      const json = JSON.stringify(object);
+      
+      fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: json
+      })
+      .then(async (response) => {
+        const jsonResponse = await response.json();
+        if (response.status === 200) {
+          formStatus.className = "form-status success";
+          formStatus.textContent = jsonResponse.message || "Message sent successfully! Thanks for reaching out.";
+          contactForm.reset();
+        } else {
+          formStatus.className = "form-status error";
+          formStatus.textContent = jsonResponse.message || "Something went wrong. Please try again.";
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        formStatus.className = "form-status error";
+        formStatus.textContent = "Network error. Please check your connection and try again.";
+      })
+      .finally(() => {
         // Clear message after 4 seconds
         setTimeout(() => {
-          formStatus.style.display = "none";
+          formStatus.className = "form-status";
+          formStatus.textContent = "";
         }, 4000);
-      }, 1200);
+      });
     });
   }
 });
