@@ -483,8 +483,8 @@ Interactive Projects:
         addTerminalLine("output", `
 Connect with Tanishq:
   - Email: tanishq38123@gmail.com
-  - GitHub: github.com/Tanishqkumarpatel
-  - Portfolio: tanishqkumarpatel.github.io
+  - GitHub: https://github.com/Tanishqkumarpatel
+  - LinkedIn: https://www.linkedin.com/in/tanishqkumarpatel/ 
         `);
         break;
         
