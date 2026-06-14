@@ -464,11 +464,11 @@ nav a:hover::after, nav a.active::after {
 }
 
 .prompt-symbol {
-  color: var(--secondary);
+  color: #06b6d4;
 }
 
 .command-text {
-  color: var(--text-primary);
+  color: #f8fafc;
   font-weight: 500;
 }
 
@@ -478,7 +478,7 @@ nav a:hover::after, nav a.active::after {
 }
 
 .output-text span.highlight {
-  color: var(--primary);
+  color: #818cf8;
   font-weight: 600;
 }
 
@@ -491,11 +491,15 @@ nav a:hover::after, nav a.active::after {
 .terminal-input {
   background: none;
   border: none;
-  color: var(--text-primary);
+  color: #f8fafc;
   font-family: var(--font-mono);
   font-size: 0.85rem;
   outline: none;
   flex-grow: 1;
+}
+
+.terminal-input::placeholder {
+  color: #64748b;
 }
 
 .cursor {
