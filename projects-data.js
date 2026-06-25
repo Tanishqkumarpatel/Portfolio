@@ -37,6 +37,44 @@ const projectsData = [
     ]
   },
   {
+    id: "stm32-freertos",
+    title: "STM32 Embedded Firmware",
+    category: "systems",
+    subtitle: "Bare-Metal & RTOS Concurrency",
+    date: "June 2026",
+    github: "https://github.com/Tanishqkumarpatel/STM32-FreeRTOS",
+    demo: null,
+    tech: ["C", "FreeRTOS", "STM32F446RE", "ARM Cortex-M4", "NVIC", "EXTI", "HAL APIs", "GDB", "STM32CubeIDE"],
+    metrics: {
+      "Kernel": "FreeRTOS Preemption",
+      "Architecture": "32-bit ARM Cortex-M4",
+      "Peripherals": "GPIO, PWM, NVIC, EXTI"
+    },
+    shortDesc: "Low-level embedded firmware in C for the STM32F446RE microcontroller, demonstrating register configurations, interrupts, and FreeRTOS preemptive multitasking with queues.",
+    overview: "This repository documents my hands-on learning of embedded systems and real-time operating systems (RTOS) on ARM Cortex-M4 microcontrollers. I implemented low-level hardware control (GPIO blinking, TIM-based PWM dimming, NVIC external interrupts) and integrated the FreeRTOS kernel to manage task execution, scheduler operations, and safe inter-task communication via queues.",
+    starBullets: [
+      "Developed low-level embedded firmware in C utilizing FreeRTOS on STM32F446RE microcontrollers to study hardware-software boundaries.",
+      "Configured external interrupts via the EXTI controller and Nested Vectored Interrupt Controller (NVIC) to trigger responsive Interrupt Service Routines (ISRs).",
+      "Implemented a preemptive multitasking architecture with FreeRTOS, managing task priorities and scheduling thread-like functions.",
+      "Architected thread-safe data pipelines between tasks using FreeRTOS Queues, resolving race conditions and managing task blocking states.",
+      "Utilized GDB and STM32CubeIDE to inspect hardware memory, analyze register configurations, and debug concurrent task runtimes."
+    ],
+    interviewQAs: [
+      {
+        q: "How does the Nested Vectored Interrupt Controller (NVIC) handle interrupt priority on the ARM Cortex-M4?",
+        a: "The NVIC supports configurable priority levels for interrupts. When an interrupt occurs, the NVIC compares its priority to the currently executing context. If the new interrupt has a higher priority (lower numerical value), the processor suspends the current routine, pushes registers onto the stack, and jumps to the new Interrupt Service Routine (ISR). If it is lower or equal, it is pended until the active ISR completes."
+      },
+      {
+        q: "What is the purpose of GPIO pin debouncing in hardware vs software?",
+        a: "Mechanical buttons do not make a clean contact when pressed; they bounce rapidly between open and closed states for several milliseconds, causing multiple false triggers. In software, this can be resolved by reading the pin status after a short delay (e.g. 20-50ms) to ensure the signal has stabilized before executing actions, or by configuring a hardware debouncing circuit (like an RC low-pass filter) to smooth the voltage transitions."
+      },
+      {
+        q: "How do FreeRTOS queues facilitate safe communication between tasks?",
+        a: "FreeRTOS queues are thread-safe FIFO buffers that allow tasks to send and receive messages without race conditions. Under the hood, the queue handles task blocking—if a task tries to read from an empty queue, it can block and yield CPU execution to other tasks until data arrives, or a timeout occurs. The queue manages this using critical sections and scheduler locks to ensure atomic memory operations during read/write."
+      }
+    ]
+  },
+  {
     id: "shell",
     title: "Unix Shell in C",
     category: "systems",

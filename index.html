@@ -156,44 +156,7 @@
         </div>
       </div>
       
-      <!-- --- Turing Experience Spotlight --- -->
-      <div class="turing-highlight">
-        <h3 class="section-title" style="text-align: left; font-size: 1.8rem; margin-bottom: 0.5rem;">LLM Evaluation & RLHF Spotlight</h3>
-        <p style="color: var(--text-secondary); font-size: 1rem; margin-bottom: 1.5rem;">A deep dive into my work stress-testing models, engineering System Instructions, and building evaluation rubrics.</p>
-        
-        <div class="turing-grid">
-          <div>
-            <div class="turing-badges">
-              <span class="turing-badge">RLHF Frameworks</span>
-              <span class="turing-badge">Adversarial Red-Teaming</span>
-              <span class="turing-badge">JSON Evaluation Rubrics</span>
-              <span class="turing-badge">Prompt Optimization</span>
-            </div>
-            <ul class="turing-list">
-              <li><strong>Model Comparison:</strong> Evaluated side-by-side responses from LLM variants, annotating performance deviations to guide model training loops.</li>
-              <li><strong>Pagination System:</strong> Designed custom System Instructions (SI) ensuring models instruct users to prompt for continuations instead of truncating responses at hard token limits.</li>
-              <li><strong>Adversarial Red-Teaming:</strong> Created 100+ complex prompts to uncover edge-case failures where models failed to meet over 30% of rubric standards.</li>
-            </ul>
-          </div>
-          
-          <div class="turing-rubric-card">
-            <h4>Sample JSON Rubric Snippet</h4>
-            <pre><code>{
-  <span class="code-property">"dimension"</span>: <span class="code-string">"Instruction Following"</span>,
-  <span class="code-property">"metrics"</span>: {
-    <span class="code-property">"format_adherence"</span>: {
-      <span class="code-property">"required"</span>: <span class="code-keyword">true</span>,
-      <span class="code-property">"type"</span>: <span class="code-string">"JSON_schema"</span>
-    },
-    <span class="code-property">"max_token_safety"</span>: {
-      <span class="code-property">"trigger"</span>: <span class="code-string">"pagination_hint"</span>,
-      <span class="code-property">"threshold"</span>: <span class="code-number">8192</span>
-    }
-  }
-}</code></pre>
-          </div>
-        </div>
-      </div>
+
     </div>
   </section>
 
@@ -201,7 +164,7 @@
   <section id="skills" style="background-color: var(--bg-secondary); border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border);">
     <div class="container">
       <h2 class="section-title">Core <span>Skills Matrix</span></h2>
-      <p class="section-subtitle">Hover to highlight. Click any technology chip to filter and showcase projects implementing that stack below.</p>
+      <p class="section-subtitle">Hover to highlight technologies in my core technical stack.</p>
       
       <div class="skills-matrix">
         <!-- Languages -->
@@ -268,7 +231,6 @@
           <div class="skills-list">
             <span class="skill-chip">NumPy</span>
             <span class="skill-chip">Google Gemini API</span>
-            <span class="skill-chip">RLHF Evaluation</span>
             <span class="skill-chip">Git</span>
             <span class="skill-chip">GitHub Actions</span>
             <span class="skill-chip">Docker</span>
@@ -283,7 +245,7 @@
   <section id="projects">
     <div class="container">
       <h2 class="section-title">Technical <span>Projects</span></h2>
-      <p class="section-subtitle">Click "Learn More" to view full engineering summaries, STAR layout bullet points, and technical interview guides.</p>
+      <p class="section-subtitle">Click "Learn More" to view full engineering summaries and STAR layout bullet points.</p>
       
       <!-- Category filter tabs -->
       <div class="projects-filter">
@@ -294,11 +256,7 @@
         <button class="filter-btn" data-filter="academic">UBC Academic Work</button>
       </div>
 
-      <!-- Skill filter feedback -->
-      <div id="active-skill-indicator" class="active-skill-indicator">
-        Filtering projects using technology: <span id="active-skill-name">C++</span>
-        <button id="clear-skill-filter" class="clear-skill-filter">[Clear Filter]</button>
-      </div>
+
       
       <div class="projects-grid" id="projects-grid">
         <!-- Rendered dynamically by script.js -->
@@ -400,19 +358,21 @@
         </div>
         
         <div class="contact-form-panel">
-          <form action="https://api.web3forms.com/submit" method="post" id="contact-form">
-            <input type="hidden" name="access_key" value="6c3654e5-3617-4933-a128-5794d960fe05">
+          <form id="contact-form">
+            <!-- Web3Forms Access Key: Replace value with your actual access key -->
+            <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+            
             <div class="form-group">
               <label for="form-name">Full Name</label>
-              <input type="text" name="name" id="form-name" class="form-control" placeholder="John Doe" required>
+              <input type="text" id="form-name" name="name" class="form-control" placeholder="John Doe" required>
             </div>
             <div class="form-group">
               <label for="form-email">Email Address</label>
-              <input type="email" name="email" id="form-email" class="form-control" placeholder="john@example.com" required>
+              <input type="email" id="form-email" name="email" class="form-control" placeholder="john@example.com" required>
             </div>
             <div class="form-group">
               <label for="form-msg">Your Message</label>
-              <textarea name="message" id="form-msg" class="form-control" placeholder="Hi Tanishq, let's talk about..." required></textarea>
+              <textarea id="form-msg" name="message" class="form-control" placeholder="Hi Tanishq, let's talk about..." required></textarea>
             </div>
             
             <button type="submit" class="btn btn-primary" style="width: 100%;">
@@ -429,7 +389,7 @@
   <footer>
     <div class="container">
       <div class="footer-text">
-        &copy; 2026 Tanishqkumar Nalinbhai Patel. All rights reserved.
+        &copy; 2026 Tanishqkumar Patel. All rights reserved.
       </div>
       <div class="footer-nav">
         <a href="#">Home</a>
@@ -469,7 +429,6 @@
       <div class="modal-nav">
         <button class="modal-tab-btn active" data-tab="overview">Overview</button>
         <button class="modal-tab-btn" data-tab="star">Resume STAR Bullets</button>
-        <button class="modal-tab-btn" data-tab="qa">Interview Deep Dive</button>
       </div>
       
       <div class="modal-body">
@@ -488,10 +447,6 @@
           <!-- Bullet points list populated by JS -->
         </div>
         
-        <!-- Tab 3: Q&A -->
-        <div class="modal-tab-content" id="modal-qa-content">
-          <!-- Q&As list populated by JS -->
-        </div>
       </div>
     </div>
   </div>

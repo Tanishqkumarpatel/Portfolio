@@ -81,25 +81,15 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Projects Grid & Filtering ---
   const projectsGrid = document.getElementById("projects-grid");
   const filterButtons = document.querySelectorAll(".filter-btn");
-  const skillChips = document.querySelectorAll(".skill-chip");
-  const activeSkillIndicator = document.getElementById("active-skill-indicator");
-  const activeSkillName = document.getElementById("active-skill-name");
-  const clearSkillFilterBtn = document.getElementById("clear-skill-filter");
   
   let currentCategoryFilter = "all";
-  let currentSkillFilter = null;
 
   function renderProjects() {
     projectsGrid.innerHTML = "";
     
     const filtered = projectsData.filter(project => {
       // Category Match
-      const categoryMatch = currentCategoryFilter === "all" || project.category === currentCategoryFilter;
-      
-      // Skill Match
-      const skillMatch = !currentSkillFilter || project.tech.some(t => t.toLowerCase() === currentSkillFilter.toLowerCase());
-      
-      return categoryMatch && skillMatch;
+      return currentCategoryFilter === "all" || project.category === currentCategoryFilter;
     });
 
     if (filtered.length === 0) {
@@ -183,17 +173,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function resetAllFilters() {
     currentCategoryFilter = "all";
-    currentSkillFilter = null;
     
     // Update Category UI
     filterButtons.forEach(btn => {
       btn.classList.remove("active");
       if (btn.getAttribute("data-filter") === "all") btn.classList.add("active");
     });
-
-    // Update Skill UI
-    skillChips.forEach(chip => chip.classList.remove("active-filter"));
-    activeSkillIndicator.style.display = "none";
 
     renderProjects();
   }
@@ -207,42 +192,6 @@ document.addEventListener("DOMContentLoaded", () => {
       currentCategoryFilter = button.getAttribute("data-filter");
       renderProjects();
     });
-  });
-
-  // Bind Skills Matrix click to filter projects
-  skillChips.forEach(chip => {
-    chip.addEventListener("click", () => {
-      const skillName = chip.textContent.trim();
-      
-      // Toggle logic
-      if (currentSkillFilter === skillName) {
-        currentSkillFilter = null;
-        chip.classList.remove("active-filter");
-        activeSkillIndicator.style.display = "none";
-      } else {
-        // Clear other active chips
-        skillChips.forEach(c => c.classList.remove("active-filter"));
-        
-        currentSkillFilter = skillName;
-        chip.classList.add("active-filter");
-        
-        // Show Filter Indicator
-        activeSkillName.textContent = skillName;
-        activeSkillIndicator.style.display = "block";
-        
-        // Scroll down to projects section smoothly
-        document.getElementById("projects").scrollIntoView({ behavior: "smooth" });
-      }
-      renderProjects();
-    });
-  });
-
-  // Clear skill filter
-  clearSkillFilterBtn.addEventListener("click", () => {
-    currentSkillFilter = null;
-    skillChips.forEach(c => c.classList.remove("active-filter"));
-    activeSkillIndicator.style.display = "none";
-    renderProjects();
   });
 
   // Initial projects load
@@ -265,7 +214,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Content blocks
   const modalOverviewContent = document.getElementById("modal-overview-content");
   const modalStarContent = document.getElementById("modal-star-content");
-  const modalQaContent = document.getElementById("modal-qa-content");
 
   let activeProject = null;
 
@@ -320,17 +268,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </ul>
     `;
 
-    // Populate Q&A list
-    modalQaContent.innerHTML = `
-      <div class="qa-list">
-        ${activeProject.interviewQAs.map(qa => `
-          <div class="qa-item">
-            <div class="qa-q">${qa.q}</div>
-            <div class="qa-a">${qa.a}</div>
-          </div>
-        `).join("")}
-      </div>
-    `;
+
 
     // Reset back to Overview tab
     modalTabBtns.forEach(btn => btn.classList.remove("active"));
@@ -446,27 +384,28 @@ Available commands:
         break;
         
       case "about":
-        addTerminalLine("output", "Computer Science Undergraduate at the University of British Columbia. Specialized in systems development (C/C++), core algorithmic optimization (Sudoku solvers, neural networks), full-stack frameworks (Next.js, Supabase), and LLM Red-Teaming/RLHF QA evaluation (Turing Internship).");
+        addTerminalLine("output", "Computer Science Undergraduate at the University of British Columbia. Specialized in systems programming (C/C++), embedded firmware & RTOS (STM32, FreeRTOS), and full-stack web architectures (Next.js, Supabase, Postgres).");
         break;
         
       case "skills":
         addTerminalLine("output", `
 <span class="highlight">Languages:</span> C, C++, Java, Python, TypeScript, SQL, R, Bash
 <span class="highlight">Web Stack:</span> Next.js, React, Node.js, Express, Tailwind, PostgreSQL
-<span class="highlight">Systems:</span> Socket network sockets, std::thread thread pooling, WebAssembly
-<span class="highlight">AI/ML:</span> Neural Networks (from scratch NumPy), Gemini API, RLHF evaluation
+<span class="highlight">Systems:</span> STM32, FreeRTOS, Sockets, std::thread, WebAssembly, Makefiles, Linux
+<span class="highlight">AI/ML:</span> Neural Networks (from scratch NumPy), Gemini API
         `);
         break;
         
       case "projects":
         addTerminalLine("output", `
 Interactive Projects:
+  - <span class="highlight">STM32 Embedded Firmware</span> (Bare-metal & FreeRTOS multitasking in C)
   - <span class="highlight">Canvas AI</span> (Next.js study companion using Google Gemini API & Supabase)
   - <span class="highlight">HTTP Server</span> (High-performance multithreaded C++ socket server)
   - <span class="highlight">Sudoku Solver</span> (C solving engine compiled to WebAssembly, 33,750x speedup)
   - <span class="highlight">MNIST Classifier</span> (Vectorized 4-layer neural net using NumPy only)
   
-*Tip: Click the project cards below for detailed STAR descriptions and interview deep dives.*
+*Tip: Click the project cards below for detailed STAR descriptions.*
         `);
         break;
         
@@ -483,8 +422,8 @@ Interactive Projects:
         addTerminalLine("output", `
 Connect with Tanishq:
   - Email: tanishq38123@gmail.com
-  - GitHub: https://github.com/Tanishqkumarpatel
-  - LinkedIn: https://www.linkedin.com/in/tanishqkumarpatel/ 
+  - GitHub: github.com/Tanishqkumarpatel
+  - Portfolio: tanishqkumarpatel.github.io
         `);
         break;
         
@@ -513,44 +452,38 @@ Connect with Tanishq:
     contactForm.addEventListener("submit", (e) => {
       e.preventDefault();
       
-      // Show loading status
+      formStatus.style.display = "block";
       formStatus.className = "form-status loading";
       formStatus.textContent = "Sending message...";
       
       const formData = new FormData(contactForm);
-      const object = Object.fromEntries(formData);
-      const json = JSON.stringify(object);
       
+      // Post to Web3Forms API
       fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: json
+        body: formData
       })
       .then(async (response) => {
-        const jsonResponse = await response.json();
+        const json = await response.json();
         if (response.status === 200) {
           formStatus.className = "form-status success";
-          formStatus.textContent = jsonResponse.message || "Message sent successfully! Thanks for reaching out.";
+          formStatus.textContent = "Message sent successfully! Thanks for reaching out.";
           contactForm.reset();
         } else {
+          console.error(json);
           formStatus.className = "form-status error";
-          formStatus.textContent = jsonResponse.message || "Something went wrong. Please try again.";
+          formStatus.textContent = json.message || "Something went wrong. Please try again.";
         }
       })
       .catch((error) => {
         console.error(error);
         formStatus.className = "form-status error";
-        formStatus.textContent = "Network error. Please check your connection and try again.";
+        formStatus.textContent = "Connection error. Please try again later.";
       })
       .finally(() => {
-        // Clear message after 4 seconds
         setTimeout(() => {
-          formStatus.className = "form-status";
-          formStatus.textContent = "";
-        }, 4000);
+          formStatus.style.display = "none";
+        }, 5000);
       });
     });
   }

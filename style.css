@@ -464,11 +464,11 @@ nav a:hover::after, nav a.active::after {
 }
 
 .prompt-symbol {
-  color: #06b6d4;
+  color: var(--secondary);
 }
 
 .command-text {
-  color: #f8fafc;
+  color: #ffffff;
   font-weight: 500;
 }
 
@@ -478,7 +478,7 @@ nav a:hover::after, nav a.active::after {
 }
 
 .output-text span.highlight {
-  color: #818cf8;
+  color: var(--primary);
   font-weight: 600;
 }
 
@@ -491,7 +491,7 @@ nav a:hover::after, nav a.active::after {
 .terminal-input {
   background: none;
   border: none;
-  color: #f8fafc;
+  color: #ffffff;
   font-family: var(--font-mono);
   font-size: 0.85rem;
   outline: none;
@@ -500,6 +500,7 @@ nav a:hover::after, nav a.active::after {
 
 .terminal-input::placeholder {
   color: #64748b;
+  opacity: 0.8;
 }
 
 .cursor {
@@ -613,88 +614,7 @@ nav a:hover::after, nav a.active::after {
   color: var(--secondary);
 }
 
-/* --- Turing Highlight Card --- */
-.turing-highlight {
-  margin-top: 3rem;
-  grid-column: 1 / -1;
-  background: linear-gradient(135deg, var(--card-bg), rgba(6, 182, 212, 0.03));
-  border: 1px solid var(--card-border);
-  border-radius: 1rem;
-  padding: 2.5rem;
-  box-shadow: var(--shadow-md);
-  transition: border-color var(--transition-slow);
-}
 
-.turing-highlight:hover {
-  border-color: var(--card-border-hover);
-}
-
-.turing-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 3rem;
-  margin-top: 1.5rem;
-}
-
-.turing-badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.turing-badge {
-  background: rgba(var(--secondary-rgb), 0.1);
-  color: var(--secondary);
-  border: 1px solid rgba(var(--secondary-rgb), 0.15);
-  font-size: 0.8rem;
-  padding: 0.25rem 0.75rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-}
-
-.turing-list {
-  list-style: none;
-}
-
-.turing-list li {
-  margin-bottom: 0.75rem;
-  position: relative;
-  padding-left: 1.25rem;
-  font-size: 0.95rem;
-  color: var(--text-secondary);
-}
-
-.turing-list li::before {
-  content: '✓';
-  position: absolute;
-  left: 0;
-  color: var(--accent);
-  font-weight: 700;
-}
-
-.turing-rubric-card {
-  background-color: rgba(7, 9, 19, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.03);
-  border-radius: 0.75rem;
-  padding: 1.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: #94a3b8;
-  height: fit-content;
-}
-
-.turing-rubric-card h4 {
-  font-family: var(--font-sans);
-  color: var(--text-primary);
-  margin-bottom: 0.75rem;
-  font-size: 0.95rem;
-}
-
-.code-keyword { color: #f43f5e; }
-.code-string { color: #10b981; }
-.code-property { color: #38bdf8; }
-.code-number { color: #fbbf24; }
 
 /* --- Skills Section --- */
 .skills-matrix {
@@ -747,7 +667,7 @@ nav a:hover::after, nav a.active::after {
   border-radius: 0.5rem;
   font-size: 0.85rem;
   font-weight: 500;
-  cursor: pointer;
+  cursor: default;
   transition: all var(--transition-fast);
 }
 
@@ -756,13 +676,6 @@ nav a:hover::after, nav a.active::after {
   color: var(--primary);
   border-color: var(--primary);
   transform: scale(1.05);
-}
-
-.skill-chip.active-filter {
-  background-color: var(--primary);
-  color: #fff;
-  border-color: var(--primary);
-  box-shadow: 0 0 12px rgba(var(--primary-rgb), 0.3);
 }
 
 /* --- Projects Section --- */
@@ -798,34 +711,6 @@ nav a:hover::after, nav a.active::after {
   box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.2);
 }
 
-.active-skill-indicator {
-  display: none;
-  text-align: center;
-  margin-top: -2rem;
-  margin-bottom: 2rem;
-  font-size: 0.95rem;
-  color: var(--secondary);
-  font-weight: 500;
-}
-
-.active-skill-indicator span {
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.clear-skill-filter {
-  background: none;
-  border: none;
-  color: var(--text-tertiary);
-  text-decoration: underline;
-  cursor: pointer;
-  margin-left: 0.5rem;
-  font-size: 0.85rem;
-}
-
-.clear-skill-filter:hover {
-  color: var(--text-primary);
-}
 
 .projects-grid {
   display: grid;
@@ -1156,11 +1041,6 @@ textarea.form-control {
   display: block;
 }
 
-.form-status.error {
-  color: #ef4444;
-  display: block;
-}
-
 /* --- Footer --- */
 footer {
   border-top: 1px solid var(--card-border);
@@ -1402,44 +1282,6 @@ footer .container {
   color: var(--secondary);
 }
 
-.qa-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.qa-item {
-  border-bottom: 1px solid var(--card-border);
-  padding-bottom: 1.5rem;
-}
-
-.qa-item:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-.qa-q {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 0.75rem;
-  display: flex;
-  gap: 0.5rem;
-}
-
-.qa-q::before {
-  content: 'Q:';
-  color: var(--primary);
-}
-
-.qa-a {
-  color: var(--text-secondary);
-  font-size: 0.95rem;
-  white-space: pre-line;
-  line-height: 1.6;
-  padding-left: 1.5rem;
-  border-left: 2px solid var(--card-border);
-}
 
 /* --- Responsive Breakpoints --- */
 @media (max-width: 968px) {
@@ -1471,11 +1313,7 @@ footer .container {
     grid-template-columns: 1fr;
     gap: 3rem;
   }
-  
-  .turing-grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
+
   
   .contact-wrapper {
     grid-template-columns: 1fr;
