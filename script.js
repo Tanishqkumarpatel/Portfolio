@@ -399,6 +399,7 @@ Available commands:
       case "projects":
         addTerminalLine("output", `
 Interactive Projects:
+  - <span class="highlight">Guessify</span> (Collaborative React/TypeScript game engine built via Agile/Scrum)
   - <span class="highlight">STM32 Embedded Firmware</span> (Bare-metal & FreeRTOS multitasking in C)
   - <span class="highlight">Canvas AI</span> (Next.js study companion using Google Gemini API & Supabase)
   - <span class="highlight">HTTP Server</span> (High-performance multithreaded C++ socket server)

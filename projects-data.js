@@ -44,20 +44,20 @@ const projectsData = [
     date: "June 2026",
     github: "https://github.com/Tanishqkumarpatel/STM32-FreeRTOS",
     demo: null,
-    tech: ["C", "FreeRTOS", "STM32F446RE", "ARM Cortex-M4", "NVIC", "EXTI", "HAL APIs", "GDB", "STM32CubeIDE"],
+    tech: ["C", "FreeRTOS", "STM32F446RE", "ARM Cortex-M4", "NVIC", "EXTI", "HAL APIs", "GDB", "STM32CubeIDE", "UART", "ADC"],
     metrics: {
-      "Kernel": "FreeRTOS Preemption",
-      "Architecture": "32-bit ARM Cortex-M4",
-      "Peripherals": "GPIO, PWM, NVIC, EXTI"
+      "Platform": "STM32 Nucleo-F446RE",
+      "Timer Config": "1kHz TIM2 (PSC=83 ARR=999)",
+      "Debugging": "UART Mutex Logger"
     },
     shortDesc: "Low-level embedded firmware in C for the STM32F446RE microcontroller, demonstrating register configurations, interrupts, and FreeRTOS preemptive multitasking with queues.",
     overview: "This repository documents my hands-on learning of embedded systems and real-time operating systems (RTOS) on ARM Cortex-M4 microcontrollers. I implemented low-level hardware control (GPIO blinking, TIM-based PWM dimming, NVIC external interrupts) and integrated the FreeRTOS kernel to manage task execution, scheduler operations, and safe inter-task communication via queues.",
     starBullets: [
-      "Developed low-level embedded firmware in C utilizing FreeRTOS on STM32F446RE microcontrollers to study hardware-software boundaries.",
-      "Configured external interrupts via the EXTI controller and Nested Vectored Interrupt Controller (NVIC) to trigger responsive Interrupt Service Routines (ISRs).",
-      "Implemented a preemptive multitasking architecture with FreeRTOS, managing task priorities and scheduling thread-like functions.",
-      "Architected thread-safe data pipelines between tasks using FreeRTOS Queues, resolving race conditions and managing task blocking states.",
-      "Utilized GDB and STM32CubeIDE to inspect hardware memory, analyze register configurations, and debug concurrent task runtimes."
+      "Developed low-level embedded firmware in C utilizing FreeRTOS on STM32F446RE microcontrollers, configuring registers for GPIO, ADC, and TIM2 timers.",
+      "Configured external interrupts via the EXTI controller and Nested Vectored Interrupt Controller (NVIC) to trigger ISR callbacks, resolving mechanical debouncing with timestamp-based state machines.",
+      "Implemented a preemptive multitasking architecture with FreeRTOS, managing scheduler states and resolving task starvation through priority configurations and block-yielding delays.",
+      "Architected thread-safe data pipelines between ISRs and consumer tasks using FreeRTOS Queues, deploying xQueueSendFromISR and portYIELD_FROM_ISR for deferred interrupt handling.",
+      "Diagnosed and resolved a silent stack overflow crash caused by newlib-nano float-formatting routines inside printf, scaling task stacks to 4KB and configuring GCC compiler linker options."
     ],
     interviewQAs: [
       {
@@ -69,8 +69,41 @@ const projectsData = [
         a: "Mechanical buttons do not make a clean contact when pressed; they bounce rapidly between open and closed states for several milliseconds, causing multiple false triggers. In software, this can be resolved by reading the pin status after a short delay (e.g. 20-50ms) to ensure the signal has stabilized before executing actions, or by configuring a hardware debouncing circuit (like an RC low-pass filter) to smooth the voltage transitions."
       },
       {
-        q: "How do FreeRTOS queues facilitate safe communication between tasks?",
-        a: "FreeRTOS queues are thread-safe FIFO buffers that allow tasks to send and receive messages without race conditions. Under the hood, the queue handles task blocking—if a task tries to read from an empty queue, it can block and yield CPU execution to other tasks until data arrives, or a timeout occurs. The queue manages this using critical sections and scheduler locks to ensure atomic memory operations during read/write."
+        q: "Can you explain the stack overflow issue you encountered with float-based printf on FreeRTOS and how you debugged it?",
+        a: "When logging raw 12-bit ADC voltage conversions from a photoresistor voltage divider, using '%f' inside printf caused a silent freeze after two cycles. In newlib-nano, floating-point formatting routines are highly resource-intensive and overflowed the task's default 512-byte stack. Using GDB, I identified the overflow location, resized the task's stack allocation to 4KB in the task parameters, and configured the `-u _printf_float` linker flag in STM32CubeIDE to enable proper library linking."
+      }
+    ]
+  },
+  {
+    id: "guessify",
+    title: "Guessify",
+    category: "web",
+    subtitle: "Agile Team Wordle Engine",
+    date: "June 2026",
+    github: "https://github.com/chingu-voyages/V61-tier2-team-23",
+    demo: null,
+    tech: ["React", "TypeScript", "Vite", "Tailwind CSS", "React Router", "Agile/Scrum", "Git/GitHub"],
+    metrics: {
+      "Methodology": "Agile/Scrum Sprints",
+      "Core Hook": "Custom useWordle State Engine",
+      "Design": "Tailwind CSS Layout"
+    },
+    shortDesc: "A collaborative React and TypeScript Wordle clone built in a remote developer cohort using Agile methodologies.",
+    overview: "Guessify is a modern, responsive recreation of the popular Wordle game built as a collaborative team project during a Chingu Voyage cohort. The development was conducted under strict Agile/Scrum guidelines with weekly sprints, standups, and peer code reviews. The architecture separates UI display components from game state via custom React hooks, utilizing a high-performance two-pass matching algorithm to manage tile color feedback and tracking dictionary validation in real time.",
+    starBullets: [
+      "Co-engineered a responsive Wordle web application in a collaborative team setting, applying Agile/Scrum methodologies, 2-week sprint planning, and GitHub pull request reviews.",
+      "Architected the core game loop using a custom React hook (useWordle) that handles user attempts, word length filtering, dictionary validation, and win/loss states.",
+      "Engineered an optimized two-pass matching algorithm in TypeScript to compute letter status colors (correct/present/absent), preventing double-counting errors on repeat characters.",
+      "Resolved complex merge conflicts during feature integration sprints, cleaning up stale configurations and merging separate keyboard state features into the master branch."
+    ],
+    interviewQAs: [
+      {
+        q: "How does the two-pass matching algorithm work for tile coloring in Wordle, and why is it necessary?",
+        a: "A single-pass check has a classic bug: if the solution is 'APPLE' and the user guesses 'PAPAS', a simple left-to-right pass would mark the first 'P' as yellow, the second 'P' as green, and potentially double-count 'P's or mark them incorrectly. To solve this, we implemented a two-pass algorithm. The first pass loops through the guess and marks all direct positional matches as green, deleting those letters from a copy of the solution. The second pass loops through the remaining letters, marking them yellow if they exist in the remaining solution pool (and removing them to prevent duplicate matches), or grey if they are absent. This ensures precise, standard Wordle behavior."
+      },
+      {
+        q: "How did you manage collaboration and version control in a team setting?",
+        a: "We followed Scrum guidelines with weekly sprints. We kept separate feature branches (like feat/max_6_attempts or feat/validation) and submitted Pull Requests to the dev branch. I took the lead in resolving key integration merge conflicts, making sure that keyboard state and gameboard features merged cleanly. We used strict code reviews and ran dev builds locally using Vite to verify there were no runtime errors before merging into main."
       }
     ]
   },
