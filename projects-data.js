@@ -7,7 +7,7 @@ const projectsData = [
     subtitle: "AI-Powered Study Companion",
     date: "June 2026",
     github: "https://github.com/Tanishqkumarpatel/Canvas_AI",
-    demo: "https://canvasai-devtanuteam.vercel.app",
+    demo: "https://canvas-ai-jet.vercel.app/",
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "NextAuth.js", "PostgreSQL", "Google Gemini API", "Supabase"],
     metrics: {
       "AI Engine": "Gemini 3.1 Flash Lite",
@@ -81,7 +81,7 @@ const projectsData = [
     subtitle: "Agile Team Wordle Engine",
     date: "June 2026",
     github: "https://github.com/chingu-voyages/V61-tier2-team-23",
-    demo: null,
+    demo: "https://guessifydev.netlify.app/",
     tech: ["React", "TypeScript", "Vite", "Tailwind CSS", "React Router", "Agile/Scrum", "Git/GitHub"],
     metrics: {
       "Methodology": "Agile/Scrum Sprints",
