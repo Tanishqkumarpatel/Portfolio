@@ -1,6 +1,38 @@
 // Detailed projects data for the portfolio
 const projectsData = [
   {
+    id: "stm32-car",
+    title: "Autonomous Robot Car",
+    category: "systems",
+    subtitle: "STM32 Obstacle Avoidance",
+    date: "July 2026",
+    github: "https://github.com/Tanishqkumarpatel/car",
+    demo: null,
+    tech: ["C", "STM32F446RE", "HC-SR04", "TB6612FNG", "Hardware Interfacing", "State Machines"],
+    metrics: {
+      "Platform": "STM32 Nucleo-F446RE",
+      "Sensor": "HC-SR04 Ultrasonic",
+      "Control": "Custom Motor Drive System"
+    },
+    shortDesc: "An autonomous robot car built around the STM32 Nucleo-F446RE microcontroller, utilizing an ultrasonic sensor and custom state-machine logic for obstacle avoidance.",
+    overview: "Built an autonomous robot car using the STM32 Nucleo-F446RE microcontroller. The car continuously polls an HC-SR04 ultrasonic sensor via a hardware timer to detect obstacles and dynamically adjusts its movement based on distance thresholds using a dual-motor drive system.",
+    starBullets: [
+      "Designed and implemented autonomous obstacle avoidance firmware in C for an STM32F446RE microcontroller.",
+      "Configured hardware timers (TIM4) via HAL APIs to continuously poll an HC-SR04 ultrasonic sensor with microsecond-level precision.",
+      "Engineered a custom dual-motor drive system utilizing a TB6612FNG driver and custom state-machine logic to navigate clear paths, creep in caution zones, and execute evasion maneuvers when obstacles are detected."
+    ],
+    interviewQAs: [
+      {
+        q: "How did you manage motor control without hardware PWM on the TB6612FNG driver?",
+        a: "To navigate the 'Caution Zone' (25cm - 40cm), I implemented a custom Roll() function. This function creates a rapid forward/reverse pulse that simulates a slower speed, allowing the car to safely creep toward the object without relying on hardware PWM signals."
+      },
+      {
+        q: "How did you interface with the HC-SR04 ultrasonic sensor?",
+        a: "I used the STM32's hardware timers (specifically TIM4) via the HAL libraries to measure the pulse width of the echo signal from the HC-SR04. This allowed for microsecond-level precision in calculating the distance to obstacles."
+      }
+    ]
+  },
+  {
     id: "canvas-ai",
     title: "Canvas AI",
     category: "web",
