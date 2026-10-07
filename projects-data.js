@@ -1,34 +1,38 @@
 // Detailed projects data for the portfolio
 const projectsData = [
   {
-    id: "sparky",
-    title: "Sparky AI Voice Assistant",
+    id: "linux-home-server",
+    title: "Linux Home Server",
     category: "systems",
-    subtitle: "Real-Time Hardware AI Assistant",
-    date: "In Progress (July 2026)",
-    github: "https://github.com/Tanishqkumarpatel/sparky",
+    subtitle: "Self-Hosted Private Cloud & Systems Admin",
+    date: "May 2026",
+    github: "https://github.com/Tanishqkumarpatel",
     demo: null,
-    tech: ["Python", "FastAPI", "WebSockets", "C++", "ESP32-S3", "Google GenAI SDK", "I2S"],
+    tech: ["Linux", "Ubuntu Server", "Docker Compose", "Jellyfin", "Immich", "Bash", "systemd", "SSH", "Networking"],
     metrics: {
-      "Hardware": "ESP32-S3 WROOM",
-      "Audio API": "Gemini Live API",
-      "Audio Quality": "16kHz In / 24kHz Out PCM"
+      "Operating System": "Headless Ubuntu Server",
+      "Media & Storage": "Jellyfin & Immich",
+      "Disk Optimization": "Automated 48h Retention Policy"
     },
-    shortDesc: "A custom, hardware-based smart assistant powered by an ESP32 microcontroller and the Gemini Live API for fast, conversational voice interactions.",
-    overview: "Sparky is a real-time, hardware-based AI voice assistant. The system features a bi-directional Python backend built with FastAPI and WebSockets that interfaces with the Google GenAI SDK to handle raw PCM audio streaming, asynchronous queueing, and sample rate conversions. The embedded C++ firmware running on an ESP32-S3 microcontroller maintains a continuous WebSocket stream, interfacing with an INMP441 I2S microphone and a MAX98357A I2S amplifier driving a 3W speaker.",
+    shortDesc: "Repurposed an old laptop into a 24/7 headless Linux home server hosting Jellyfin and Immich, with an automated media retention cleanup script to optimize limited disk space.",
+    overview: "Transformed an unused laptop into an always-on, low-power headless Linux home server running Ubuntu Server to self-host personal media streaming and private photo backups. Configured ACPI power handling and systemd to operate silently 24/7 with the lid closed without suspending. Deployed isolated services with Docker Compose, featuring Jellyfin for media streaming and Immich for automated phone photo syncing. To solve storage constraints on the laptop's internal drive, developed an automated lifecycle script that tracks watched media and purges it 2 days after viewing, maintaining optimal free disk space without manual intervention.",
     starBullets: [
-      "Engineered a real-time, bi-directional Python server using FastAPI and WebSockets to facilitate low-latency audio streaming between custom embedded hardware and the cloud.",
-      "Integrated the Google GenAI SDK (Gemini Live API) to process raw PCM audio streams, managing asynchronous queueing and executing on-the-fly sample rate conversions (16kHz input to 24kHz output).",
-      "Developed embedded C++ firmware for the ESP32-S3 WROOM to maintain a continuous WebSocket stream, integrating an INMP441 I2S microphone and MAX98357A I2S amplifier for audio I/O."
+      "Repurposed an idle laptop into a headless, energy-efficient Linux server running Ubuntu Server, tuning ACPI power profiles and systemd-logind to guarantee 24/7 silent operation without sleep or thermal throttling.",
+      "Self-hosted private streaming and photo backup services using Docker Compose with Jellyfin and Immich, enabling zero-subscription local network streaming and secure remote access.",
+      "Engineered an automated media lifecycle cleanup script that purges watched movies and episodes 2 days after viewing, preventing disk exhaustion on storage-constrained hardware while keeping active libraries clean."
     ],
     interviewQAs: [
       {
-        q: "How did you manage the continuous audio streaming between the ESP32 and the Python backend?",
-        a: "I implemented a bi-directional WebSocket connection. The ESP32 captures audio via the INMP441 microphone using the I2S protocol and streams raw PCM data to the FastAPI server. The server processes this stream asynchronously, routes it to the Gemini Live API, and sends the AI's audio response back over the same WebSocket connection to be played through the MAX98357A amplifier."
+        q: "Why did you build an automated 2-day media deletion script and how does it work?",
+        a: "Because this server runs on an older laptop with finite storage, keeping every downloaded or streamed file would quickly exhaust disk capacity and crash services. To prevent this without manual chore, I wrote an automated cleanup script that queries Jellyfin's played status: once media is marked as watched, a 48-hour countdown is initiated before the video files are safely pruned from disk. This balances convenience (allowing re-watching or sharing for 2 days) with automated disk reclamation."
       },
       {
-        q: "How did you test the backend before the hardware was ready?",
-        a: "I developed a browser-based testing client using the Web Audio API. This allowed me to simulate the hardware by recording audio from my computer's microphone, sending it over WebSockets to validate the server logic, manual turn-taking, and Voice Activity Detection (VAD) before integrating the actual ESP32 firmware."
+        q: "Why repurpose an old laptop instead of buying a dedicated Raspberry Pi or mini PC?",
+        a: "An old laptop offers several practical advantages: it has built-in battery backup (functioning as an automatic UPS during minor power outages), a lower idle power envelope than full desktops, and an x86_64 architecture with hardware video decoding support (via Intel QuickSync) which provides substantially better Jellyfin transcoding throughput than lower-power ARM boards like a Raspberry Pi."
+      },
+      {
+        q: "How did you configure headless 24/7 operation with the laptop lid closed without it suspending?",
+        a: "Default Linux systemd behavior suspends laptops upon lid closure. In /etc/systemd/logind.conf, I configured HandleLidSwitch=ignore, HandleLidSwitchDocked=ignore, and HandleLidSwitchExternalPower=ignore, then restarted systemd-logind. I also disabled display backlight power and adjusted CPU governor profiles to maximize energy efficiency and minimize fan noise."
       }
     ]
   },
