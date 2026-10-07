@@ -1,34 +1,34 @@
 // Detailed projects data for the portfolio
 const projectsData = [
   {
-    id: "sparky",
-    title: "Sparky AI Voice Assistant",
+    id: "linux-home-server",
+    title: "Linux Home Server",
     category: "systems",
-    subtitle: "Real-Time Hardware AI Assistant",
-    date: "In Progress (July 2026)",
-    github: "https://github.com/Tanishqkumarpatel/sparky",
+    subtitle: "Self-Hosted Infrastructure & Systems Admin",
+    date: "July 2026",
+    github: "https://github.com/Tanishqkumarpatel",
     demo: null,
-    tech: ["Python", "FastAPI", "WebSockets", "C++", "ESP32-S3", "Google GenAI SDK", "I2S"],
+    tech: ["Linux", "Ubuntu Server", "Docker", "Bash", "systemd", "SSH", "UFW", "Networking"],
     metrics: {
-      "Hardware": "ESP32-S3 WROOM",
-      "Audio API": "Gemini Live API",
-      "Audio Quality": "16kHz In / 24kHz Out PCM"
+      "Operating System": "Headless Ubuntu Server",
+      "Container Engine": "Docker & Docker Compose",
+      "Availability": "24/7 Automated Uptime"
     },
-    shortDesc: "A custom, hardware-based smart assistant powered by an ESP32 microcontroller and the Gemini Live API for fast, conversational voice interactions.",
-    overview: "Sparky is a real-time, hardware-based AI voice assistant. The system features a bi-directional Python backend built with FastAPI and WebSockets that interfaces with the Google GenAI SDK to handle raw PCM audio streaming, asynchronous queueing, and sample rate conversions. The embedded C++ firmware running on an ESP32-S3 microcontroller maintains a continuous WebSocket stream, interfacing with an INMP441 I2S microphone and a MAX98357A I2S amplifier driving a 3W speaker.",
+    shortDesc: "Repurposed a legacy laptop into a dedicated, power-optimized headless Linux home server hosting self-hosted containerized services.",
+    overview: "Transformed an unused laptop into a resilient, low-power headless Linux home server running Ubuntu Server. Configured kernel and ACPI power management (suppressing lid-close suspend) for silent 24/7 headless operation, hardened remote administration via key-only SSH and UFW firewall rules, and containerized self-hosted network services using Docker with automated cron health checks and data backups.",
     starBullets: [
-      "Engineered a real-time, bi-directional Python server using FastAPI and WebSockets to facilitate low-latency audio streaming between custom embedded hardware and the cloud.",
-      "Integrated the Google GenAI SDK (Gemini Live API) to process raw PCM audio streams, managing asynchronous queueing and executing on-the-fly sample rate conversions (16kHz input to 24kHz output).",
-      "Developed embedded C++ firmware for the ESP32-S3 WROOM to maintain a continuous WebSocket stream, integrating an INMP441 I2S microphone and MAX98357A I2S amplifier for audio I/O."
+      "Repurposed a legacy laptop into a low-power, headless Linux home server running Ubuntu Server, configuring systemd and ACPI lid-switch power management for continuous 24/7 headless operation.",
+      "Hardened remote server security by enforcing SSH key authentication, disabling root password login, configuring static local IP routing, and implementing strict UFW firewall access rules.",
+      "Orchestrated isolated containerized services utilizing Docker and Docker Compose, writing automated Bash maintenance scripts and cron jobs for routine container health monitoring and disk backups."
     ],
     interviewQAs: [
       {
-        q: "How did you manage the continuous audio streaming between the ESP32 and the Python backend?",
-        a: "I implemented a bi-directional WebSocket connection. The ESP32 captures audio via the INMP441 microphone using the I2S protocol and streams raw PCM data to the FastAPI server. The server processes this stream asynchronously, routes it to the Gemini Live API, and sends the AI's audio response back over the same WebSocket connection to be played through the MAX98357A amplifier."
+        q: "How did you configure the laptop to run 24/7 as a headless server with the lid closed without suspending?",
+        a: "By default, systemd suspends laptops when the lid closes. In /etc/systemd/logind.conf, I configured HandleLidSwitch=ignore, HandleLidSwitchDocked=ignore, and HandleLidSwitchExternalPower=ignore, followed by restarting systemd-logind. I also disabled display power and tuned CPU frequency governors and powertop to minimize idle power draw and thermal buildup."
       },
       {
-        q: "How did you test the backend before the hardware was ready?",
-        a: "I developed a browser-based testing client using the Web Audio API. This allowed me to simulate the hardware by recording audio from my computer's microphone, sending it over WebSockets to validate the server logic, manual turn-taking, and Voice Activity Detection (VAD) before integrating the actual ESP32 firmware."
+        q: "How did you secure and manage remote access to the server?",
+        a: "I assigned the server a static DHCP lease on the local router for consistent addressing. For security, I enforced Ed25519 SSH key authentication, disabled password-based login and root login in /etc/ssh/sshd_config, configured UFW (Uncomplicated Firewall) to allow only specific incoming ports, and managed services through secure shell sessions."
       }
     ]
   },
