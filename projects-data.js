@@ -4,31 +4,35 @@ const projectsData = [
     id: "linux-home-server",
     title: "Linux Home Server",
     category: "systems",
-    subtitle: "Self-Hosted Infrastructure & Systems Admin",
-    date: "July 2026",
+    subtitle: "Self-Hosted Private Cloud & Systems Admin",
+    date: "May 2026",
     github: "https://github.com/Tanishqkumarpatel",
     demo: null,
-    tech: ["Linux", "Ubuntu Server", "Docker", "Bash", "systemd", "SSH", "UFW", "Networking"],
+    tech: ["Linux", "Ubuntu Server", "Docker Compose", "Jellyfin", "Immich", "Bash", "systemd", "SSH", "Networking"],
     metrics: {
       "Operating System": "Headless Ubuntu Server",
-      "Container Engine": "Docker & Docker Compose",
-      "Availability": "24/7 Automated Uptime"
+      "Media & Storage": "Jellyfin & Immich",
+      "Disk Optimization": "Automated 48h Retention Policy"
     },
-    shortDesc: "Repurposed a legacy laptop into a dedicated, power-optimized headless Linux home server hosting self-hosted containerized services.",
-    overview: "Transformed an unused laptop into a resilient, low-power headless Linux home server running Ubuntu Server. Configured kernel and ACPI power management (suppressing lid-close suspend) for silent 24/7 headless operation, hardened remote administration via key-only SSH and UFW firewall rules, and containerized self-hosted network services using Docker with automated cron health checks and data backups.",
+    shortDesc: "Repurposed an old laptop into a 24/7 headless Linux home server hosting Jellyfin and Immich, with an automated media retention cleanup script to optimize limited disk space.",
+    overview: "Transformed an unused laptop into an always-on, low-power headless Linux home server running Ubuntu Server to self-host personal media streaming and private photo backups. Configured ACPI power handling and systemd to operate silently 24/7 with the lid closed without suspending. Deployed isolated services with Docker Compose, featuring Jellyfin for media streaming and Immich for automated phone photo syncing. To solve storage constraints on the laptop's internal drive, developed an automated lifecycle script that tracks watched media and purges it 2 days after viewing, maintaining optimal free disk space without manual intervention.",
     starBullets: [
-      "Repurposed a legacy laptop into a low-power, headless Linux home server running Ubuntu Server, configuring systemd and ACPI lid-switch power management for continuous 24/7 headless operation.",
-      "Hardened remote server security by enforcing SSH key authentication, disabling root password login, configuring static local IP routing, and implementing strict UFW firewall access rules.",
-      "Orchestrated isolated containerized services utilizing Docker and Docker Compose, writing automated Bash maintenance scripts and cron jobs for routine container health monitoring and disk backups."
+      "Repurposed an idle laptop into a headless, energy-efficient Linux server running Ubuntu Server, tuning ACPI power profiles and systemd-logind to guarantee 24/7 silent operation without sleep or thermal throttling.",
+      "Self-hosted private streaming and photo backup services using Docker Compose with Jellyfin and Immich, enabling zero-subscription local network streaming and secure remote access.",
+      "Engineered an automated media lifecycle cleanup script that purges watched movies and episodes 2 days after viewing, preventing disk exhaustion on storage-constrained hardware while keeping active libraries clean."
     ],
     interviewQAs: [
       {
-        q: "How did you configure the laptop to run 24/7 as a headless server with the lid closed without suspending?",
-        a: "By default, systemd suspends laptops when the lid closes. In /etc/systemd/logind.conf, I configured HandleLidSwitch=ignore, HandleLidSwitchDocked=ignore, and HandleLidSwitchExternalPower=ignore, followed by restarting systemd-logind. I also disabled display power and tuned CPU frequency governors and powertop to minimize idle power draw and thermal buildup."
+        q: "Why did you build an automated 2-day media deletion script and how does it work?",
+        a: "Because this server runs on an older laptop with finite storage, keeping every downloaded or streamed file would quickly exhaust disk capacity and crash services. To prevent this without manual chore, I wrote an automated cleanup script that queries Jellyfin's played status: once media is marked as watched, a 48-hour countdown is initiated before the video files are safely pruned from disk. This balances convenience (allowing re-watching or sharing for 2 days) with automated disk reclamation."
       },
       {
-        q: "How did you secure and manage remote access to the server?",
-        a: "I assigned the server a static DHCP lease on the local router for consistent addressing. For security, I enforced Ed25519 SSH key authentication, disabled password-based login and root login in /etc/ssh/sshd_config, configured UFW (Uncomplicated Firewall) to allow only specific incoming ports, and managed services through secure shell sessions."
+        q: "Why repurpose an old laptop instead of buying a dedicated Raspberry Pi or mini PC?",
+        a: "An old laptop offers several practical advantages: it has built-in battery backup (functioning as an automatic UPS during minor power outages), a lower idle power envelope than full desktops, and an x86_64 architecture with hardware video decoding support (via Intel QuickSync) which provides substantially better Jellyfin transcoding throughput than lower-power ARM boards like a Raspberry Pi."
+      },
+      {
+        q: "How did you configure headless 24/7 operation with the laptop lid closed without it suspending?",
+        a: "Default Linux systemd behavior suspends laptops upon lid closure. In /etc/systemd/logind.conf, I configured HandleLidSwitch=ignore, HandleLidSwitchDocked=ignore, and HandleLidSwitchExternalPower=ignore, then restarted systemd-logind. I also disabled display backlight power and adjusted CPU governor profiles to maximize energy efficiency and minimize fan noise."
       }
     ]
   },
