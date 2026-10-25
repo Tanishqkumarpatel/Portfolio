@@ -1,6 +1,38 @@
 // Detailed projects data for the portfolio
 const projectsData = [
   {
+    id: "ubc-open-robotics",
+    title: "UBC Open Robotics",
+    category: "systems",
+    subtitle: "Haptic Link — Comms & Telemetry Firmware (SLD Phase)",
+    date: "Oct 2026 – Present",
+    github: null,
+    demo: null,
+    tech: ["C", "FreeRTOS", "ESP32", "RS-422", "COBS", "CRC", "Spinlocks", "ISRs", "PWM", "draw.io"],
+    metrics: {
+      "Target Rate": "1 kHz haptic link",
+      "Architecture": "Dual-core ESP32 FreeRTOS",
+      "SLD Pages": "6-page system-level design"
+    },
+    shortDesc: "Designing the end-effector ESP32 firmware for UBC Open Robotics' haptic teleoperation project — a dual-core FreeRTOS architecture exchanging closure and force over RS-422 at 1 kHz.",
+    overview: "Member of the Communications & Telemetry subteam on the Haptic Link project, which links an exoskeleton operator to a remote gripper. The exoskeleton-side ESP32 sends finger-closure commands; the end-effector ESP32 drives a servo and returns load-cell force — all at a 1 kHz target rate over RS-422. Currently in the system-level design (SLD) phase of a year-long project (SLD → prototype → implementation → integration). The SLD covers the full end-effector firmware: dual-core FreeRTOS task architecture, packet format, inter-core synchronization, ISR-driven force pipeline, gripper safety gating, and cross-team interface specification.",
+    starBullets: [
+      "Designed a dual-core FreeRTOS architecture on ESP32: comms task (COBS framing, CRC validation, RS-422 I/O) pinned to core 0; force sampling and gripper tasks pinned to core 1 — decoupled so a slow packet never stalls the force path.",
+      "Specified spinlock-guarded mailboxes and task notifications as the sole inter-core handoff, eliminating race conditions on closure and force data without blocking either core.",
+      "Authored a six-page draw.io SLD: 15-byte packet format, link-loss watchdog (5 ms), ISR-driven force pipeline (tare → scale → low-pass filter → timestamp → mailbox post), PWM servo safety gate, task/ISR/lock tables, boot sequence, and open interface questions for cross-team alignment."
+    ],
+    interviewQAs: [
+      {
+        q: "Why put comms on core 0 and force sampling on core 1?",
+        a: "The 1 kHz target means each cycle is 1 ms. If comms and force sampling ran on the same core, a delayed packet or slow servo write could push the force ISR past its deadline. Pinning them to separate cores gives each subsystem its own execution budget. The only shared state is two spinlock-guarded mailboxes — one for closure (core 0 writes, core 1 reads) and one for force (core 1 writes, core 0 reads). This is the minimal coupling needed for the data exchange without any blocking between paths."
+      },
+      {
+        q: "What is COBS framing and why use it over RS-422?",
+        a: "Consistent Overhead Byte Stuffing (COBS) is a framing scheme that eliminates null bytes from the payload, so 0x00 can be used as an unambiguous packet delimiter. RS-422 is a balanced differential signaling standard — it gives noise immunity and long cable runs, which matters in a physical exoskeleton-to-gripper link. COBS + a CRC gives us both reliable framing (start/end detection) and integrity checking (bit error detection) without needing a higher-level protocol stack, keeping latency low."
+      }
+    ]
+  },
+  {
     id: "linux-home-server",
     title: "Linux Home Server",
     category: "systems",
